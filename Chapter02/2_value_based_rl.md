@@ -1,38 +1,24 @@
----
-jupyter:
-  jupytext:
-    cell_metadata_filter: -all
-    executable: /usr/bin/env python
-    formats: md,ipynb
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.11.1
-  kernelspec:
-    display_name: tfrl-cookbook
-    language: python
-    name: tfrl-cookbook
----
-
 Value-based reinforcement learning
 
-
 Chapter 2, TensorFlow 2 Reinforcement Learning Cookbook | Praveen Palanisamy
+
 
 ```python
 import numpy as np
 ```
+
 
 ```python
 from envs.maze import MazeEnv
 from value_function_utils import visualize_maze_values
 ```
 
+
 ```python
 discount = 0.9
 iters = 1000
 ```
+
 
 ```python
 env = MazeEnv()
@@ -41,6 +27,7 @@ state_values = np.zeros(state_dim)
 q_values = np.zeros((state_dim, env.action_space.n))  # Action values
 policy = np.zeros(state_dim)
 ```
+
 
 ```python
 def calculate_values(state, action):
@@ -67,6 +54,7 @@ def calculate_values(state, action):
     return v_sum
 ```
 
+
 ```python
 # Value Iteration
 for i in range(iters):
@@ -82,16 +70,19 @@ for i in range(iters):
     state_values = np.copy(v_s)
 ```
 
+
 ```python
 for state in range(state_dim):
     for action in range(env.action_space.n):
         q_values[state, action] = calculate_values(state, action)
 ```
 
+
 ```python
 for state in range(state_dim):
     policy[state] = np.argmax(q_values[state, :])
 ```
+
 
 ```python
 np.save("results/q_values", q_values)
@@ -102,3 +93,60 @@ print("Optimal actions:")
 print(policy)
 visualize_maze_values(q_values, env)
 ```
+
+    Action mapping:[0 - UP; 1 - DOWN; 2 - LEFT; 3 - RIGHT
+    Optimal actions:
+    [1. 1. 1. 1. 1. 1. 1. 1. 3. 3. 3. 3. 3. 3. 3. 3. 1. 1. 3. 1. 3. 1. 3. 3.
+     3. 1. 3. 3. 3. 3. 3. 3. 0. 3. 0. 0. 3. 0. 0. 0. 2. 2. 0. 2. 0. 2. 0. 0.
+     0. 1. 0. 0. 1. 1. 0. 1. 0. 1. 0. 0. 3. 3. 0. 3. 0. 3. 0. 0. 3. 0. 0. 0.
+     1. 1. 1. 2. 3. 3. 3. 3. 1. 1. 1. 0. 1. 0. 0. 0. 1. 1. 1. 0. 1. 0. 0. 0.
+     1. 0. 0. 0. 0. 0. 0. 0. 2. 2. 2. 2. 0. 0. 0. 0.]
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_1.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_2.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_3.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_4.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_5.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_6.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_7.png)
+    
+
+
+
+    
+![png](2_value_based_rl_files/2_value_based_rl_10_8.png)
+    
+
