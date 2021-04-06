@@ -1,26 +1,14 @@
-#!/usr/bin/env python
-# ---
-# jupyter:
-#   jupytext:
-#     cell_metadata_filter: -all
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.11.1
-#   kernelspec:
-#     display_name: tfrl-cookbook
-#     language: python
-#     name: tfrl-cookbook
-# ---
+Neural Evolutionary Agent for GridWorld RL environment with image observations
 
-# Neural Evolutionary Agent for GridWorld RL environment with image observations
-#
-# Chapter 1, TensorFlow 2 Reinforcement Learning Cookbook | Praveen Palanisamy
+Chapter 1, TensorFlow 2 Reinforcement Learning Cookbook | Praveen Palanisamy
 
+
+```python
 from collections import namedtuple
+```
 
+
+```python
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -28,11 +16,16 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from tqdm import tqdm
+```
 
+
+```python
 import envs  # Required to register Gridworld-v0 env
 import fire
+```
 
 
+```python
 class Brain(keras.Model):
     def __init__(self, action_dim=5, input_shape=(1, 8 * 8)):
         """Initialize the Agent's Brain model
@@ -53,8 +46,10 @@ class Brain(keras.Model):
         # Process batch observations using `call(inputs)` behind-the-scenes
         action_logits = self.predict_on_batch(observations)
         return action_logits
+```
 
 
+```python
 class Agent(object):
     def __init__(self, action_dim=5, input_shape=(1, 8 * 8)):
         """Agent with a neural-network brain powered policy
@@ -79,11 +74,15 @@ class Agent(object):
 
     def learn(self, obs, actions, **kwargs):
         self.brain.fit(obs, actions, **kwargs)
+```
 
 
+```python
 Trajectory = namedtuple("Trajectory", ["obs", "actions", "reward"])
+```
 
 
+```python
 # Evaluate agent in the given environment
 def evaluate(agent, env, render=True):
     obs, episode_reward, done, step_num, info = env.reset(), 0.0, False, 0, None
@@ -95,8 +94,10 @@ def evaluate(agent, env, render=True):
         if render:
             env.render()
     return step_num, episode_reward, done, info
+```
 
 
+```python
 def rollout(agent, env, render=False):
     """Rollout `agent` in the `environment` for 1 episode
     Args:
@@ -128,8 +129,10 @@ def rollout(agent, env, render=False):
             env.render()
     env.close()
     return observations, actions, episode_reward
+```
 
 
+```python
 def gather_elite_xp(trajectories, elitism_criterion):
     """Gather elite trajectories from the batch of trajectories
     Args:
@@ -160,15 +163,19 @@ def gather_elite_xp(trajectories, elitism_criterion):
         np.array(unpacked_elite_batch_actions),
         reward_threshold,
     )
+```
 
 
+```python
 def gen_action_distribution(action_index, action_dim=5):
     action_distribution = np.zeros(action_dim).astype(type(action_index))
     action_distribution[action_index] = 1
     # action_distribution = np.expand_dims(action_distribution, 0)
     return action_distribution
+```
 
 
+```python
 def train(
     env_id="Gridworld-v0",
     num_trajectory_rollouts=70,
@@ -221,10 +228,75 @@ def train(
     plt.legend()
     plt.grid()
     plt.show()
+```
 
 
+```python
 if __name__ == "__main__":
     #fire.Fire(train)
     train()
+```
+
+     10%|█         | 1/10 [00:14<02:13, 14.81s/it]
+
+    Episode#:1 elite-reward-threshold:-2.30 reward:-3.05 
 
 
+     20%|██        | 2/10 [00:32<02:13, 16.63s/it]
+
+    Episode#:2 elite-reward-threshold:-4.57 reward:-4.90 
+
+
+     30%|███       | 3/10 [00:51<02:04, 17.79s/it]
+
+    Episode#:3 elite-reward-threshold:-6.50 reward:-6.70 
+
+
+     40%|████      | 4/10 [01:11<01:51, 18.57s/it]
+
+    Episode#:4 elite-reward-threshold:-6.30 reward:-6.39 
+
+
+     50%|█████     | 5/10 [01:31<01:34, 18.97s/it]
+
+    Episode#:5 elite-reward-threshold:-6.10 reward:-6.39 
+
+
+     60%|██████    | 6/10 [01:50<01:16, 19.08s/it]
+
+    Episode#:6 elite-reward-threshold:-6.20 reward:-6.37 
+
+
+     70%|███████   | 7/10 [02:08<00:56, 18.84s/it]
+
+    Episode#:7 elite-reward-threshold:-6.10 reward:-6.17 
+
+
+     80%|████████  | 8/10 [02:28<00:37, 18.93s/it]
+
+    Episode#:8 elite-reward-threshold:-6.00 reward:-6.26 
+
+
+     90%|█████████ | 9/10 [02:47<00:19, 19.14s/it]
+
+    Episode#:9 elite-reward-threshold:-6.00 reward:-6.27 
+
+
+    100%|██████████| 10/10 [03:06<00:00, 18.64s/it]
+
+    Episode#:10 elite-reward-threshold:-6.07 reward:-6.23 
+
+
+    
+
+
+
+    
+![png](06_neural_evolutionary_agent_files/06_neural_evolutionary_agent_12_21.png)
+    
+
+
+
+```python
+
+```

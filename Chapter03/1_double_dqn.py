@@ -1,3 +1,15 @@
+# ---
+# jupyter:
+#   jupytext:
+#     cell_metadata_filter: -all
+#     formats: ipynb,py:light
+#     text_representation:
+#       extension: .py
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.11.1
+# ---
+
 import argparse
 from datetime import datetime
 import os
@@ -22,7 +34,7 @@ parser.add_argument("--eps_decay", type=float, default=0.995)
 parser.add_argument("--eps_min", type=float, default=0.01)
 parser.add_argument("--logdir", default="logs")
 
-args = parser.parse_args()
+args = parser.parse_args("")
 logdir = os.path.join(
     args.logdir, parser.prog, args.env, datetime.now().strftime("%Y%m%d-%H%M%S")
 )
