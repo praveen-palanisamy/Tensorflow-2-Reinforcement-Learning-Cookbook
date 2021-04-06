@@ -26,7 +26,7 @@ parser.add_argument("--eps_decay", type=float, default=0.995)
 parser.add_argument("--eps_min", type=float, default=0.01)
 parser.add_argument("--logdir", default="logs")
 
-args = parser.parse_args()
+args = parser.parse_args("")
 logdir = os.path.join(
     args.logdir, parser.prog, args.env, datetime.now().strftime("%Y%m%d-%H%M%S")
 )

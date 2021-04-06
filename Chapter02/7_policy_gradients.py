@@ -1,4 +1,20 @@
 #!/usr/bin/env python
+# ---
+# jupyter:
+#   jupytext:
+#     cell_metadata_filter: -all
+#     formats: ipynb,py:light
+#     text_representation:
+#       extension: .py
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.11.1
+#   kernelspec:
+#     display_name: tfrl-cookbook
+#     language: python
+#     name: tfrl-cookbook
+# ---
+
 # Policy gradient algorithm and agent with neural network policy
 # Chapter 2, TensorFlow 2 Reinforcement Learning Cookbook | Praveen Palanisamy
 
